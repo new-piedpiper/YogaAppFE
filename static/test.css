@@ -1,0 +1,21 @@
+#Heading{
+    color: blueviolet;
+    text-align: center;
+    font-size: 50;
+    font-family: Helvetica;
+    font-weight: bold;
+}
+#Camera{
+    width: 60%;
+    height: 50%;
+    background: rgb(32, 18, 18);
+}
+
+#videoEl{
+    height: 100%;
+    width: 100%;
+}
+
+@media screen {
+    
+}
