@@ -12,7 +12,11 @@
         </div>
         <div id="wrapper1" class="container">
             <div id="Camera" class="mx-auto">
-             <video autoplay=true id="videoEl"></video>       
+             <video autoplay=true id="videoEl">
+                <canvas id="canvasElement"></canvas>
+
+                <img id="photo">
+             </video>       
             </div>
             <div class="pt-3 d-grid gap-2 col-6 mx-auto">
             <button type="button" class=" btn btn-dark" onclick=accam()>Start Stream</button>

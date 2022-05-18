@@ -9,5 +9,9 @@ socketio = SocketIO(app,cors_allowed_origins="*")
 def home():
     return render_template('index.html')
 
+@socketio.on('input image')
+def check(input):
+    print('image_recieved')
+
 if __name__=='__main__':
     socketio.run(app)
