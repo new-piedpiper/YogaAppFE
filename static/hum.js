@@ -9,7 +9,7 @@ navigator.mediaDevices.getUserMedia({video: true}).then(function (stream){
         setInterval(
             function(){
                 sendSnapshot();
-            },50
+            },2000
         );
     }).catch(function(err){
         console.log(err.name+':'+err.message);
@@ -30,7 +30,7 @@ function sendSnapshot() {
     if (!localMediaStream) {
       return;
     }
-
+    console.log(video.videoHeight,video.videoWidth);
     ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 300, 150);
 
     let dataURL = canvas.toDataURL('image/jpeg');
