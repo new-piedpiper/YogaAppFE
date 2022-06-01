@@ -1,6 +1,9 @@
 var video=document.querySelector('#videoEl');
 let canvas = document.querySelector("#canvasElement");
 let ctx= canvas.getContext('2d')
+Ps=document.getElementById('Pose')
+Cr=document.getElementById('Correction')
+
 function accam(){
 navigator.mediaDevices.getUserMedia({video: true}).then(function (stream){
         video.srcObject=stream;
@@ -9,7 +12,7 @@ navigator.mediaDevices.getUserMedia({video: true}).then(function (stream){
         setInterval(
             function(){
                 sendSnapshot();
-            },2000
+            },1000
         );
     }).catch(function(err){
         console.log(err.name+':'+err.message);
@@ -38,16 +41,10 @@ function sendSnapshot() {
 
     ws.emit('output image')
 
-    var img = new Image();
-    ws.on('out-image-event',function(data){
-
-
-    img.src = dataURL//data.image_data
-    photo.setAttribute('src', data.image_data);
-
-    });
-
-
+    ws.on('Answer_Response',(Pose)=>{
+        Ps.innerText=Pose.Pose
+        console.log(Pose.Pose)
+        });
   }
 
 
