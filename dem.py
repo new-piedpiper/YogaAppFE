@@ -22,28 +22,26 @@ def home():
 @socketio.on('input image')
 def check(input):
     lock=0
-    if(lock==0):
-        lock=1
-        start=time.time()
-        print('image_recieved')
-        print(len(queue))
-        image_data = re.sub('^data:image/.+;base64,', '', input)
-        try:
-            image = Image.open(BytesIO(base64.b64decode(image_data)))
-            image = image.resize((320,240))
-            image.save('f1.jpg')
-            img_arr=copy.deepcopy(cv2.imread('f1.jpg'))
-            ans=ReturnPose(img_arr)
-            crc=''
-            po=ans[0]
-            for i in ans[1]:
-                crc=crc+','+i
-            print(po)
-            socketio.emit('Answer_Response',{'Pose':po[:-4]})
-        except Exception as e: 
-            print(e)
-        end=time.time()
-        print('Time is {}'.format(end-start))
-        lock=0
+    start=time.time()
+    print('image_recieved')
+    image_data = re.sub('^data:image/.+;base64,', '', input)
+    try:
+        image = Image.open(BytesIO(base64.b64decode(image_data)))
+        image = image.resize((320,240))
+        image.save('f1.jpg')
+        img_arr=copy.deepcopy(cv2.imread('f1.jpg'))
+        ans=ReturnPose(img_arr)
+        crc=''
+        po=ans[0]
+        for i in ans[1]:
+            crc=crc+','+i
+        print(po)
+        socketio.emit('Answer_Response',{'Pose':po[:-4]})
+        # socketio.emit('Answer_Response', {'Pose':'Loki is not dead'})
+    except Exception as e: 
+        print(e)
+    end=time.time()
+    print('Time is {}'.format(end-start))
+    lock=0
 if __name__=='__main__':
     socketio.run(app,debug=True)

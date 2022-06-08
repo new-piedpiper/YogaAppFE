@@ -3,6 +3,7 @@ let canvas = document.querySelector("#canvasElement");
 let ctx= canvas.getContext('2d')
 Ps=document.getElementById('Pose')
 Cr=document.getElementById('Correction')
+var ws;
 
 function accam(){
 navigator.mediaDevices.getUserMedia({video: true}).then(function (stream){
@@ -12,11 +13,12 @@ navigator.mediaDevices.getUserMedia({video: true}).then(function (stream){
         setInterval(
             function(){
                 sendSnapshot();
-            },1000
+            },5000
         );
     }).catch(function(err){
         console.log(err.name+':'+err.message);
     });
+    
 }
 
 function Vidstop(e) {
@@ -38,17 +40,9 @@ function sendSnapshot() {
 
     let dataURL = canvas.toDataURL('image/jpeg');
     ws.emit('input image', dataURL);
-
-    ws.emit('output image')
-
-    ws.on('Answer_Response',(Pose)=>{
-        Ps.innerText=Pose.Pose
-        console.log(Pose.Pose)
-        });
   }
 
-
-var ws=io();
+ws=io();
 
 ws.on('connect',function(){
         alert("Connected to server");
@@ -57,3 +51,8 @@ ws.on('connect',function(){
 ws.on('connect_error',function(){
         alert("Could not connect to server");
     });
+
+ws.on('Answer_Response',(Pose)=>{
+        Ps.innerText=Pose.Pose
+        console.log(Pose.Pose)
+        });
